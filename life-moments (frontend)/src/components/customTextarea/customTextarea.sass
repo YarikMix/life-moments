@@ -1,0 +1,16 @@
+@import "src/Styles/variables.sass"
+
+textarea
+	width: 100%
+	outline: none
+	resize: none
+	font-size: 16px
+	border-radius: 5px
+	border: 1px solid #cecece
+	transition: 0.2s ease
+
+	&:is(:focus)
+		border-color: $primary
+
+	&::-webkit-scrollbar
+		width: 0

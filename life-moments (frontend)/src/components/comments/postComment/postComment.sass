@@ -1,0 +1,42 @@
+@import "src/styles/variables.sass"
+
+.comment-wrapper
+	width: 100%
+	display: flex
+	justify-content: center
+	gap: 20px
+
+	.comment-details
+		width: 100%
+		display: flex
+		justify-content: space-between
+
+		.comment-details-left
+			display: flex
+			flex: 1
+			flex-direction: column
+			align-items: flex-start
+			gap: 3px
+			text-decoration: none
+
+			.username
+				color: #636f82
+				transition: 0.2s ease
+
+				&:hover
+					color: $primary
+
+			p
+				word-break: break-word
+				padding-right: 100px
+
+		.comment-details-right
+			display: flex
+			flex-direction: column
+			gap: 5px
+
+		.date
+			display: flex
+			align-self: center
+			color: grey
+			font-size: 14px

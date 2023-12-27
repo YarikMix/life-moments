@@ -1,0 +1,111 @@
+@import "../../../styles/variables"
+
+.post-wrapper
+	width: 100%
+	background: #fff
+	border-radius: 10px
+	box-shadow: 0 5px 8px 0 rgba(34, 60, 80, 0.2)
+	padding: 20px
+
+	.top-container
+		width: 100%
+		display: flex
+		align-items: center
+		margin-bottom: 15px
+
+		.avatar-container
+			margin-right: 10px
+
+			img
+				width: 30px
+				height: 30px
+				border-radius: 50%
+
+		.user-info-container
+			display: flex
+			flex-direction: column
+
+			.username
+				font-size: 14px
+				font-weight: bold
+
+				&:focus
+					outline: none
+
+			.geo
+				font-size: 14px
+
+	.text-container
+		margin-bottom: 25px
+		gap: 10px
+		display: flex
+		flex-direction: column
+
+		.post-content
+			p
+				word-break: break-word
+
+		.tag-list
+			display: flex
+			gap: 5px
+
+			.tag
+				color: dodgerblue
+				cursor: pointer
+
+				&:hover
+					color: $primary
+
+	.image-container
+		width: 100%
+		margin-bottom: 15px
+		border-radius: 5px
+		overflow: hidden
+
+		img
+			width: 100%
+			user-select: none
+
+	.bottom-container
+		width: 100%
+		display: flex
+		flex-direction: column
+
+		.icons-container
+			width: 100%
+			display: flex
+			justify-content: space-between
+			align-items: center
+			margin-bottom: 5px
+
+			.left-icons
+				display: flex
+				gap: 20px
+
+				.icon-container
+					display: flex
+					align-items: center
+					gap: 3px
+					cursor: pointer
+
+					span
+						transition: all 0.2s ease
+						user-select: none
+
+					.icon
+						font-size: 26px
+						transition: all 0.2s ease
+
+						@media screen and (max-width: 576px)
+							font-size: 22px
+
+					&:hover
+						color: $primary
+
+	.show-full-post
+		color: $primary
+		transition: 0.2s ease
+		margin-top: 15px
+
+		&:hover
+			opacity: 0.8

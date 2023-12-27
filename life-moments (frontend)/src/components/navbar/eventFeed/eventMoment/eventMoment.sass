@@ -1,0 +1,46 @@
+.event-moment-wrapper
+	width: 100%
+	display: flex
+
+	&:last-child
+		.event-moment-right
+			border-bottom: none
+
+	.event-moment-left
+		display: flex
+		width: 50px
+
+		.user-avatar
+			width: 35px
+			height: 35px
+			border-radius: 50%
+
+	.event-moment-right
+		display: flex
+		flex: 5
+		justify-content: space-between
+		padding-bottom: 10px
+		border-bottom: 1px solid #ccc
+
+		.event-info-container
+			display: flex
+			flex-direction: column
+
+			span
+				font-size: 14px
+
+			.top-label
+				.username
+					font-weight: bold
+
+			.bottom-label
+				.time-left
+					color: #838383
+
+		.event-moment-image-container
+			display: flex
+
+			.event-moment-image
+				width: 50px
+				height: 50px
+				border-radius: 5px

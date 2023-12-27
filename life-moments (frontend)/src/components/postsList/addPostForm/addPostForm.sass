@@ -1,0 +1,117 @@
+@import "src/Styles/variables.sass"
+
+.add-post-form-wrapper
+	width: 100%
+	display: flex
+	flex-direction: column
+	background: #fff
+	border-radius: 10px
+	box-shadow: 0 5px 8px 0 rgba(34, 60, 80, 0.2)
+
+	.top-container
+		width: 100%
+		display: flex
+		gap: 20px
+		padding: 20px
+
+		.user-avatar
+			width: 50px
+			height: 50px
+			border-radius: 50%
+
+		.inputs-container
+			width: 100%
+			display: flex
+			flex-direction: column
+			gap: 10px
+
+	.images-container
+		width: 100%
+		display: flex
+		justify-content: center
+		border-bottom: 1px solid #bfbfbf
+		padding: 20px 50px
+
+		.image-wrapper
+			position: relative
+			width: 100%
+			height: 400px
+			border: 2px dashed $primary
+			border-radius: 15px
+			display: flex
+			justify-content: center
+			align-items: center
+			flex-direction: column
+
+			#file
+				width: 100%
+				height: 100%
+				position: absolute
+				top: 0
+				right: 0
+				cursor: pointer
+				opacity: 0
+
+			img
+				width: 100%
+				height: 100%
+				border-radius: 10px
+				object-fit: cover
+
+			.upload-icon
+				color: $primary
+				font-size: 128px
+
+			.close-btn
+				font-size: 32px
+				padding: 5px
+				color: #fff
+				background: $primary
+				cursor: pointer
+				position: absolute
+				top: 20px
+				right: 20px
+				transition: 0.2s
+				border-radius: 50%
+
+				&:hover
+					transform: scale(1.05)
+
+	.bottom-container
+		display: flex
+		justify-content: space-between
+		width: 100%
+		padding: 20px
+
+		.upload-photo-button
+			#file
+				display: none
+
+			label
+				color: #fff
+				padding: 15px 20px
+				background-color: $primary
+				display: flex
+				align-items: center
+				justify-content: center
+				gap: 10px
+				font-size: 16px
+				border-radius: 10px
+				cursor: pointer
+				transition: 0.3s ease
+
+				&:hover
+					transform: scale(1.05)
+
+		.publish-button
+			border: none
+			background: #5271ff
+			color: #fff
+			padding: 10px
+			cursor: pointer
+			border-radius: 10px
+			transition: all 0.2s ease
+
+			&:hover
+				transform: scale(1.05)
+

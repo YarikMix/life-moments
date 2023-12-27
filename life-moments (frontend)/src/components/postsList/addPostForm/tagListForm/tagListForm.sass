@@ -1,0 +1,69 @@
+@import "src/Styles/variables.sass"
+
+.tag-list-form-wrapper
+	width: 100%
+	padding: 0 20px
+
+	.tag-list-container
+		width: 100%
+		background: $background
+		border-radius: 10px
+		display: flex
+		flex-direction: column
+		padding: 20px
+		border: 1px solid #bfbfbf
+
+		.top-details
+			width: 100%
+			display: flex
+			gap: 8px
+			align-items: center
+			padding: 0 10px
+			color: $primary
+
+			svg
+				font-size: 20px
+
+		ul
+			display: flex
+			flex-wrap: wrap
+			border: 1px solid #a6a6a6
+			padding: 7px
+			margin: 12px 0
+			border-radius: 5px
+			background: #fff
+
+			li
+				list-style: none
+				background: $primary
+				color: #fff
+				padding: 5px 8px 5px 10px
+				margin: 4px 3px
+				border-radius: 5px
+				display: flex
+				justify-content: center
+				align-items: center
+				gap: 5px
+
+				svg
+					cursor: pointer
+					color: #fff
+
+			input
+				outline: none
+				padding: 5px
+				border: none
+				font-size: 16px
+				background: #ffffff
+				display: flex
+				flex: 1
+
+		.bottom-details
+			width: 100%
+			display: flex
+			justify-content: space-between
+			align-items: center
+
+			span
+				color: $primary
+

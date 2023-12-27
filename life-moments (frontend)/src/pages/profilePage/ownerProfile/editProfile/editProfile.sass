@@ -1,0 +1,80 @@
+@import "../../../../styles/variables"
+
+.profile-edit-wrapper
+	width: 320px
+	display: flex
+	flex-direction: column
+	align-items: center
+	gap: 20px
+	padding: 25px
+
+	.profile-image-wrapper
+		width: 100%
+		display: flex
+		justify-content: center
+
+		.profile-image-container
+			position: relative
+
+			img
+				width: 160px
+				height: 160px
+				border-radius: 50%
+				pointer-events: none
+
+			.round
+				position: absolute
+				bottom: 8px
+				right: 8px
+				background: $primary
+				width: 36px
+				height: 36px
+				display: flex
+				justify-content: center
+				align-items: center
+				border-radius: 50%
+				overflow: hidden
+				transition: 0.2s ease
+
+				&:hover
+					transform: scale(1.05)
+
+				&:active
+					transform: scale(0.96)
+
+				svg
+					color: #fff
+					font-size: 18px
+					transition: 0.2s ease
+
+				input
+					position: absolute
+					transform: scale(2)
+					opacity: 0
+					cursor: pointer
+
+	.input-container
+		width: 100%
+		display: flex
+		flex-direction: column
+
+		label
+			font-size: 14px
+			color: #636f82
+
+	.save-button
+		margin-top: 10px
+		width: 160px
+		border: none
+		background: #5271ff
+		color: #fff
+		padding: 10px
+		cursor: pointer
+		border-radius: 10px
+		transition: all 0.2s ease
+
+		&:hover
+			transform: scale(1.05)
+
+		&:active
+			transform: scale(0.96)
