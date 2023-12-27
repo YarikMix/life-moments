@@ -14,7 +14,7 @@ from .utils import identity_user
 def search_moments(request):
     offset = int(request.GET.get("offset", 1))
     limit = int(request.GET.get("limit", 3))
-    query = request.GET.get("query", "")
+    query = request.GET.get("query", "").lower()
     user_id = int(request.GET.get("user", -1))
 
     moments = Moment.objects.all()

@@ -17,7 +17,7 @@ const UserProfile = ({user_id}) => {
 
 	const [user, setUser] = useState<User>()
 
-	const {fetchSubscribers} = useSubscribers()
+	const {subscribers, fetchSubscribers} = useSubscribers()
 
 	const fetchUser = async () => {
 		const {data} = await api.get(`users/${user_id}/`, {
@@ -70,7 +70,7 @@ const UserProfile = ({user_id}) => {
 				<span>Почта: {user.email}</span>
 				<span>Дата регистрации: {moment(user.date_register).locale(ru()).format("D MMMM")}</span>
 				<span>Рейтинг: {user.rating}</span>
-				<span>Подписчиков: {user.subscribers_count}</span>
+				<span>Подписчиков: {subscribers.length}</span>
 			</div>
 
 			<div className="edit-button-container">

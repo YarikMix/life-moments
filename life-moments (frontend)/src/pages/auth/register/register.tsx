@@ -1,15 +1,24 @@
 import "./register.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
+import {useAuth} from "../../../hooks/users/useAuth";
 
 const Register = () => {
 
 	const navigate = useNavigate()
 
-	const handleSubmit = (e) => {
+	const {register} = useAuth()
+
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		navigate("/home")
+		const formData = new FormData(e.target)
+
+		const flag = await register(formData)
+
+		if (flag) {
+			navigate("/home")
+		}
 	}
 
 	return (
@@ -37,11 +46,11 @@ const Register = () => {
 
 			</div>
 
-			<input type="text" placeholder="Почта" />
+			<input type="text" placeholder="Почта" name="email"/>
 
-			<input type="text" placeholder="Имя" />
+			<input type="text" placeholder="Имя" name="username"/>
 
-			<input type="text" placeholder="Пароль" />
+			<input type="text" placeholder="Пароль" name="password"/>
 
 			<button>Зарегистрироваться</button>
 		</form>

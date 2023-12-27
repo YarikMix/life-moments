@@ -25,14 +25,14 @@ class UserSerializer(serializers.ModelSerializer):
 class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'email', 'password', 'name')
+        fields = ('id', 'email', 'password', 'username')
         write_only_fields = ('password',)
         read_only_fields = ('id',)
 
     def create(self, validated_data):
         user = CustomUser.objects.create(
             email=validated_data['email'],
-            name=validated_data['name']
+            username=validated_data['username']
         )
 
         user.set_password(validated_data['password'])

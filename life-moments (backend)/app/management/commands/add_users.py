@@ -23,7 +23,7 @@ def add_users():
             email=f'user{user_id}@user.com',
             password='1234',
             date_register=random_date(),
-            photo=f'static/images/users/{random.randint(1, 3)}.png'
+            photo=f'static/images/users/{random.randint(1, 8)}.png'
         )
 
     print("Пользователи созданы")
