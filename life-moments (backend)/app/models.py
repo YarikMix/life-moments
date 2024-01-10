@@ -69,8 +69,8 @@ class Moment(models.Model):
     date_created = models.DateTimeField(default=timezone.now(), verbose_name="Дата создания")
     tags = models.ManyToManyField(Tag, verbose_name="Тэги")
     image = models.ImageField(default="", upload_to="moments/", verbose_name="Картинка", width_field='image_width', height_field='image_height')
-    image_width = models.IntegerField()
-    image_height = models.IntegerField()
+    image_width = models.IntegerField(default=100)
+    image_height = models.IntegerField(default=100)
 
     def __str__(self):
         return "Момент №" + str(self.pk)
