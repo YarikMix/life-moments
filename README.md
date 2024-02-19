@@ -3,7 +3,7 @@
 Веб-приложение "Моменты жизни"
 
 * Бэкенд: Django REST Framework
-* Фронтенд: React
+* Фронтенд: React, React Query, Redux Toolkit
 * База данных: PostgreSQL
 
 ## Основные страницы сайта
