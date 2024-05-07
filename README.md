@@ -1,6 +1,4 @@
-# university
-
-Веб-приложение "Моменты жизни"
+# Веб-приложение "Моменты жизни"
 
 * Бэкенд: Django REST Framework
 * Фронтенд: React, React Query, Redux Toolkit
