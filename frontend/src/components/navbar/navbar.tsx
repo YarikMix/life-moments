@@ -3,7 +3,6 @@ import { FaInstagram } from "react-icons/fa6";
 import {AiOutlineCompass, AiOutlineUser} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import EventFeed from "./eventFeed/eventFeed";
-import * as React from "react";
 import {useAuth} from "../../hooks/users/useAuth";
 import {useEffect} from "react";
 

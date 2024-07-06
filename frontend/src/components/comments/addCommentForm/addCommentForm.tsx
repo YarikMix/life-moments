@@ -1,19 +1,16 @@
 import "./addCommentForm.sass"
 import CustomTextarea from "../../customTextarea/customTextarea";
-import {api} from "../../../utils/api";
 import {useState} from "react";
 import {usePost} from "../../../hooks/posts/usePost";
-import {useToken} from "../../../hooks/users/useToken";
 import {useAuth} from "../../../hooks/users/useAuth";
 import CustomButton from "../../customButton/CustomButton";
+import {api} from "modules/api.ts";
 
 const AddCommentForm = () => {
 
 	const {avatar} = useAuth()
 
 	const {post, comments, setComments} = usePost()
-
-	const {access_token}  = useToken()
 
 	const [content, setContent] = useState("")
 
@@ -24,11 +21,7 @@ const AddCommentForm = () => {
 
 		form_data.append('content', content)
 
-		const response = await api.post(`moments/${post.id}/add_comment/`, form_data, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const response = await api.post(`moments/${post.id}/add_comment/`, form_data)
 
 		if (response.status == 200) {
 			setContent("")

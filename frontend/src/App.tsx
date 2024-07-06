@@ -6,7 +6,6 @@ import Auth from "./pages/auth/auth";
 import Navbar from "./components/navbar/navbar";
 import Home from "./pages/home/home";
 import ProfilePage from "./pages/profilePage/profilePage";
-import * as React from 'react'
 import PostPage from "./pages/postPage/postPage";
 import {
     QueryClient,
@@ -39,37 +38,33 @@ function App() {
 
                 <BrowserRouter>
 
-                <ToastContainer />
+                    <ToastContainer />
 
-                <Routes>
+                    <Routes>
 
-                    <Route path="auth/" element={<Navigate to="login/" replace />} />
+                        <Route path="auth/" element={<Navigate to="login/" replace />} />
 
-                    <Route path="auth/" element={<Auth />}>
+                        <Route path="auth/" element={<Auth />}>
 
-                        <Route path="login/" element={null} />
+                            <Route path="login/" element={null} />
 
-                        <Route path="register/" element={null}  />
+                            <Route path="register/" element={null}  />
 
-                    </Route>
+                        </Route>
 
-                    <Route path="/" element={<Navigate to="home/" replace />} />
+                        <Route path="/" element={<Layout />}>
 
-                    <Route path="/" element={<Layout />}>
+                            <Route path="/" element={<Home/>} />
 
-                        <Route path="home/" element={<Home/>} />
+                            <Route path="profile/:id" element={<ProfilePage />} />
 
-                        <Route path="profile/:id" element={<ProfilePage />} />
+                            <Route path="posts/:id" element={<PostPage/>} />
 
-                        <Route path="posts/:id" element={<PostPage/>} />
+                        </Route>
 
-                    </Route>
+                    </Routes>
 
-
-                </Routes>
-
-
-            </BrowserRouter>
+                </BrowserRouter>
 
             </Provider>
 

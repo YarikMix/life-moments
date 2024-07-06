@@ -4,14 +4,10 @@ import moment from "moment";
 import {ru} from "../../../utils/momentLocalization";
 import {User} from "../../../utils/types";
 import CustomButton from "../../../components/customButton/CustomButton";
-import {DOMEN} from "../../../utils/consts";
-import {api} from "../../../utils/api";
-import {useToken} from "../../../hooks/users/useToken";
 import {useSubscribers} from "../../../hooks/users/useSubscribers";
+import {api} from "modules/api.ts";
 
 const UserProfile = ({user_id}) => {
-
-	const {access_token} = useToken()
 	
 	const [subscribed, setSubscribed] = useState()
 
@@ -20,11 +16,7 @@ const UserProfile = ({user_id}) => {
 	const {subscribers, fetchSubscribers} = useSubscribers()
 
 	const fetchUser = async () => {
-		const {data} = await api.get(`users/${user_id}/`, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const {data} = await api.get(`users/${user_id}/`)
 
 		setUser(data)
 		setSubscribed(data.subscribed)
@@ -43,11 +35,7 @@ const UserProfile = ({user_id}) => {
 	}
 	
 	const handleSubscribeButtonClick = async () => {
-		const response = await api.post(`users/${user.id}/subscribe/`, {}, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const response = await api.post(`users/${user.id}/subscribe/`)
 
 		if (response.status == 201) {
 			setSubscribed(true)
@@ -58,12 +46,10 @@ const UserProfile = ({user_id}) => {
 		}
 	}
 
-	const avatar = `${DOMEN}/${user.photo}`
-
 	return (
 		<div className="user-profile-wrapper">
 
-			<img className="user-avatar" src={avatar} alt=""/>
+			<img className="user-avatar" src={user.photo} alt=""/>
 
 			<div className="user-info-container">
 				<span>Никнейм: {user.username}</span>

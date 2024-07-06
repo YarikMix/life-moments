@@ -1,12 +1,10 @@
 import "./post.sass"
-import avatar from "/src/assets/avatar.jpg"
 import {FaRegComment} from "react-icons/fa6";
 import PostLikeButton from "../../postLikeButton/postLikeButton";
 import {Moment} from "../../../utils/types";
 import moment from "moment";
 import {ru} from "../../../utils/momentLocalization";
 import TagList from "./tagList/tagList";
-import {DOMEN} from "../../../utils/consts";
 import {Link} from "react-router-dom";
 import PostComments from "../../comments/postComments/postComments";
 import {useState} from "react";
@@ -17,10 +15,6 @@ const Post = ({post}:{post:Moment}) => {
 
 	const [liked, setLiked] = useState(post.liked)
 
-	const image = `${DOMEN}/${post.image}`
-
-	const author = `${DOMEN}/${post.author.photo}`
-
 	return (
 		<div className="post-wrapper">
 
@@ -28,7 +22,7 @@ const Post = ({post}:{post:Moment}) => {
 				<div className="top-container">
 
 					<div className="avatar-container">
-						<img src={author} alt=""/>
+						<img src={post.author.photo} alt=""/>
 					</div>
 
 					<div className="user-info-container">
@@ -50,7 +44,7 @@ const Post = ({post}:{post:Moment}) => {
 
 				<div className="image-container">
 
-					<img src={image} alt=""/>
+					<img src={post.image} alt=""/>
 
 				</div>
 

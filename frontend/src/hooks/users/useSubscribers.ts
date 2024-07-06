@@ -1,14 +1,11 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {updateIsOpen, updateSubscribers} from "../../store/users/subscribersSlice";
-import {api} from "../../utils/api";
-import {useToken} from "./useToken";
+import {api} from "modules/api.ts";
 
 export function useSubscribers() {
     const {isOpen, subscribers} = useSelector(state => state.subscribers)
 
     const dispatch = useDispatch()
-
-    const {access_token} = useToken()
 
     const setIsOpen = (value) => {
         dispatch(updateIsOpen(value))
@@ -21,9 +18,6 @@ export function useSubscribers() {
     const fetchSubscribers = async (id) => {
 
         const {data} = await api.get(`users/${id}/subscribers/`, {
-            headers: {
-                'authorization': access_token
-            },
             params: {
                 limit: 6
             }

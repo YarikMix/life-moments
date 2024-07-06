@@ -1,6 +1,5 @@
 import {useAuth} from "../../../hooks/users/useAuth";
 import {useState} from "react";
-import {DOMEN} from "../../../utils/consts";
 import {ru} from "../../../utils/momentLocalization";
 import CustomButton from "../../../components/customButton/CustomButton";
 import EditProfile from "./editProfile/editProfile";
@@ -26,12 +25,10 @@ const OwnerProfile = () => {
         }
     }
 
-    const avatar = `${DOMEN}/${user.photo}`
-
     return (
         <div className="user-profile-wrapper">
 
-            <img className="user-avatar" src={avatar} alt=""/>
+            <img className="user-avatar" src={user.photo} alt=""/>
 
             <div className="user-info-container">
                 <span>Никнейм: {user.username}</span>

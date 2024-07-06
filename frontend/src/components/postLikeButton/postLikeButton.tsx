@@ -1,17 +1,13 @@
 import "./postLikeButton.sass"
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import {useEffect, useRef} from "react";
-import {api} from "../../utils/api";
-import {useToken} from "../../hooks/users/useToken";
 import {warningMessage} from "../../utils/toasts";
 import {useAuth} from "../../hooks/users/useAuth";
-
+import {api} from "modules/api.ts";
 
 const PostLikeButton = ({post, likes, liked, setLikes, setLiked}) => {
 
 	const {is_authenticated} = useAuth()
-
-	const {access_token} = useToken()
 
 	const ref = useRef<HTMLInputElement | null>(null)
 
@@ -30,11 +26,7 @@ const PostLikeButton = ({post, likes, liked, setLikes, setLiked}) => {
 			return
 		}
 
-		const response = await api.post(`moments/${post.id}/like/`, {}, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const response = await api.post(`moments/${post.id}/like/`)
 
 		if (response.status == 201) {
 			setLikes(response.data)

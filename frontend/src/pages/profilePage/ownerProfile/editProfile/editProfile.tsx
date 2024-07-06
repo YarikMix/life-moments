@@ -5,15 +5,12 @@ import PopUpWindow from "../../../../components/popUpWindow/popUpWindow";
 import CustomInput from "../../../../components/customInput/customInput";
 import CustomButton from "../../../../components/customButton/CustomButton";
 import {useAuth} from "../../../../hooks/users/useAuth";
-import {useToken} from "../../../../hooks/users/useToken";
-import {api} from "../../../../utils/api";
 import {successMessage} from "../../../../utils/toasts";
+import {api} from "modules/api.ts";
 
 const EditProfile = ({isOpen, setIsOpen}) => {
 
 	const {user, avatar, setUser} = useAuth()
-
-	const {access_token} = useToken()
 
 	const [username, setUsername] = useState<string>(user.username)
 
@@ -45,8 +42,7 @@ const EditProfile = ({isOpen, setIsOpen}) => {
 
 		const response = await api.put(`/users/${user.id}/update/`, form_data, {
 			headers: {
-				'content-type': 'multipart/form-data',
-				'authorization': access_token
+				'content-type': 'multipart/form-data'
 			}
 		})
 

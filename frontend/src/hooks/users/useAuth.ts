@@ -1,16 +1,12 @@
 import {useDispatch, useSelector} from 'react-redux';
 import {updateUser, updateAuthenticated, cleanUser} from "../../store/users/authSlice";
-import {useToken} from "./useToken";
 import {errorMessage, successMessage} from "../../utils/toasts";
-import {api} from "../../utils/api";
-import {DOMEN} from "../../utils/consts";
+import {api} from "modules/api.ts";
 
 export function useAuth() {
 	const {is_authenticated, user} = useSelector(state => state.user)
 
-	const { access_token, setAccessToken, resetAccessToken } = useToken()
-
-	const avatar = `${DOMEN}/${user?.photo}`
+	const avatar = user?.photo
 
 	const dispatch = useDispatch()
 
@@ -30,15 +26,10 @@ export function useAuth() {
 
 		try {
 
-			const response = await api.post(`logout/`, {}, {
-				headers: {
-					'authorization': access_token
-				}
-			})
+			const response = await api.post(`logout/`)
 
 			if (response.status == 200)
 			{
-				resetAccessToken()
 				resetUser()
 				successMessage("Вы успешли вышли из аккаунта")
 				return true
@@ -60,7 +51,6 @@ export function useAuth() {
 			const response = await api.post(`register/`, formData as FormData)
 
 			if (response.status == 201) {
-				setAccessToken(response.data["access_token"])
 				return true
 			}
 
@@ -84,7 +74,6 @@ export function useAuth() {
 			const response = await api.post(`login/`, formData)
 
 			if (response.status == 200) {
-				setAccessToken(response.data['access_token'])
 				setUser(response.data)
 				setAuthenticated(true)
 			}
@@ -112,17 +101,9 @@ export function useAuth() {
 			return true
 		}
 
-		if (access_token === "undefined") {
-			return false
-		}
-
 		try {
 
-			const response = await api.post(`check/`, {}, {
-				headers: {
-					'authorization': access_token
-				}
-			})
+			const response = await api.post(`check/`)
 
 			if (response.status == 200)
 			{

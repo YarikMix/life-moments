@@ -3,6 +3,3 @@ export const NOW = Date.now()
 export const PREV_DAY = Date.now() - DAY
 export const NEXT_DAY = Date.now() + DAY
 export const NEXT_MONTH = Date.now() + 30 * DAY
-
-
-export const DOMEN = "http://localhost:8000"

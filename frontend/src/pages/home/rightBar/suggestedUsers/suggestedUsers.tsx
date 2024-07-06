@@ -3,23 +3,16 @@ import SuggestedUser from "./suggestedUser/suggestedUser";
 import {useAuth} from "../../../../hooks/users/useAuth";
 import {useEffect, useState} from "react";
 import {User} from "../../../../utils/types";
-import {api} from "../../../../utils/api";
-import {useToken} from "../../../../hooks/users/useToken";
+import {api} from "modules/api.ts";
 
 const SuggestedUsers = () => {
 
 	const {user} = useAuth()
 
-	const {access_token} = useToken()
-
 	const [suggestedUsers, setSuggestedUsers] = useState<User[]>([])
 
 	const fetchSuggestedUsers = async () => {
-		const {data} = await api.get(`users/${user.id}/suggested_users/`, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const {data} = await api.get(`users/${user.id}/suggested_users/`)
 
 		setSuggestedUsers(data)
 	}

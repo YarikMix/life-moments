@@ -4,7 +4,7 @@ from .models import *
 
 
 class UserSerializer(serializers.ModelSerializer):
-    access_token = serializers.SerializerMethodField()
+    photo = serializers.SerializerMethodField()
     subscribed = serializers.SerializerMethodField("is_subscribed")
 
     def is_subscribed(self, user):
@@ -14,12 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
         subscriber = self.context.get("subscriber")
         return Subscribe.objects.filter(subscriber=subscriber, author=user).exists()
 
-    def get_access_token(self, user):
-        return self.context.get("access_token", "")
+    def get_photo(self, user):
+        return user.photo.url.replace("minio", "localhost", 1)
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'date_register', 'rating', 'subscribers_count', 'photo', 'access_token', 'subscribed')
+        fields = ('id', 'username', 'email', 'date_register', 'rating', 'subscribers_count', 'photo', 'subscribed')
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -86,6 +86,7 @@ class MomentSerializer(serializers.ModelSerializer):
     comments = serializers.SerializerMethodField()
     liked = serializers.SerializerMethodField("is_liked")
     image_type = serializers.SerializerMethodField()
+    image = serializers.SerializerMethodField()
 
     def get_image_type(self, moment):
         ratio = moment.image_height / moment.image_width
@@ -96,6 +97,9 @@ class MomentSerializer(serializers.ModelSerializer):
             return "big-stretch"
 
         return "v-stretch"
+
+    def get_image(self, moment):
+        return moment.image.url.replace("minio", "localhost", 1)
 
     def is_liked(self, moment):
         if "user" not in self.context:

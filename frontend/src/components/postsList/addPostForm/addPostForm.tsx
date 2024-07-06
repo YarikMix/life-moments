@@ -1,8 +1,6 @@
 import "./addPostForm.sass"
 import CustomTextarea from "../../customTextarea/customTextarea";
 import {useRef, useState} from "react";
-import {api} from "../../../utils/api";
-import {useToken} from "../../../hooks/users/useToken";
 import {AiOutlineClose} from "react-icons/ai";
 import {MdCloudUpload} from "react-icons/md";
 import {RiImageAddFill} from "react-icons/ri";
@@ -11,10 +9,9 @@ import {usePostForm} from "../../../hooks/posts/usePostForm";
 import CustomInput from "../../customInput/customInput";
 import {useAuth} from "../../../hooks/users/useAuth";
 import {warningMessage} from "../../../utils/toasts";
+import {api} from "modules/api.ts";
 
 const AddPostForm = ({data, setData}) => {
-	
-	const {access_token} = useToken()
 
 	const {avatar} = useAuth()
 
@@ -45,8 +42,7 @@ const AddPostForm = ({data, setData}) => {
 
 		const response = await api.post("/moments/create/", form_data, {
 			headers: {
-				'content-type': 'multipart/form-data',
-				'authorization': access_token
+				'content-type': 'multipart/form-data'
 			}
 		})
 

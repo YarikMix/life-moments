@@ -1,21 +1,14 @@
 import "./suggestedUser.sass"
 import UserInfo from "../../userInfo/userInfo";
-import {api} from "../../../../../utils/api";
-import {useToken} from "../../../../../hooks/users/useToken";
 import {useState} from "react";
+import {api} from "modules/api.ts";
 
 const SuggestedUser = ({user}) => {
-
-	const {access_token} = useToken()
 
 	const [subscribed, setSubscribed] = useState()
 
 	const handleClick = async () => {
-		const response = await api.post(`users/${user.id}/subscribe/`, {}, {
-			headers: {
-				'authorization': access_token
-			}
-		})
+		const response = await api.post(`users/${user.id}/subscribe/`)
 
 		if (response.status == 201) {
 			setSubscribed(true)

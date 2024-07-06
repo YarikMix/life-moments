@@ -1,14 +1,11 @@
 import "./postsList.sass"
 import AddPostForm from "./addPostForm/addPostForm";
-import {api} from "../../utils/api";
 import Post from "./post/post";
 import {useAuth} from "../../hooks/users/useAuth";
 import {useDynamicPagination} from "../../hooks/other/useDynamicPagination";
-import {useToken} from "../../hooks/users/useToken";
+import {api} from "modules/api.ts";
 
 const PostsList = ({user_id, showPostForm, query, fetching}) => {
-
-	const {access_token} = useToken()
 
 	const {is_authenticated, user} = useAuth()
 
@@ -27,10 +24,7 @@ const PostsList = ({user_id, showPostForm, query, fetching}) => {
 		}
 
 		const {data} = await api(`moments/`, {
-			params: params,
-			headers: {
-				'authorization': access_token
-			}
+			params: params
 		})
 
 		return data

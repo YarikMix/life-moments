@@ -17,7 +17,7 @@ const Register = () => {
 		const flag = await register(formData)
 
 		if (flag) {
-			navigate("/home")
+			navigate("/")
 		}
 	}
 

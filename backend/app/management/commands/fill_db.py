@@ -2,6 +2,7 @@ import random
 
 from django.core import management
 from django.core.management import BaseCommand
+from minio import Minio
 
 from app.management.commands.utils import random_text, random_date
 from app.models import *
@@ -21,13 +22,24 @@ def add_moments():
     users = CustomUser.objects.filter(is_superuser=False)
     tags = Tag.objects.all()
 
+    client = Minio("minio:9000", "minio", "minio123", secure=False)
+    client.fput_object('images', 'moments/1.jpg', "app/static/images/moments/1.jpg")
+    client.fput_object('images', 'moments/2.jpg', "app/static/images/moments/2.jpg")
+    client.fput_object('images', 'moments/3.jpg', "app/static/images/moments/3.jpg")
+    client.fput_object('images', 'moments/4.jpg', "app/static/images/moments/4.jpg")
+    client.fput_object('images', 'moments/5.jpg', "app/static/images/moments/5.jpg")
+    client.fput_object('images', 'moments/6.jpg', "app/static/images/moments/6.jpg")
+    client.fput_object('images', 'moments/7.jpg', "app/static/images/moments/7.jpg")
+    client.fput_object('images', 'moments/8.jpg', "app/static/images/moments/8.jpg")
+    client.fput_object('images', 'moments/9.jpg', "app/static/images/moments/9.jpg")
+
     for moment_id in range(100):
         moment = Moment.objects.create(
             title=f"Заголовок №{moment_id}",
             content=random_text(),
             author=random.choice(users),
             date_created=random_date(),
-            image=f"static/images/moments/{random.randint(1, 9)}.jpg"
+            image=f"moments/{random.randint(1, 9)}.jpg"
         )
 
         for _ in range(random.randint(1, 3)):

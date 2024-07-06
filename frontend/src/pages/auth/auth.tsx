@@ -15,7 +15,7 @@ const Auth = () => {
 	const handleAuth = async () => {
 		const flag = await auth()
 		if (flag) {
-			navigate("/home")
+			navigate("/")
 		}
 	}
 

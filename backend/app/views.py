@@ -88,6 +88,13 @@ def create_moment(request):
             else:
                 moment.tags.add(Tag.objects.create(name=tag))
 
+    print(request.data)
+    image = request.data.get("image")
+    if image is not None:
+        print(image)
+        moment.image = image
+        moment.save()
+
     serializer = MomentSerializer(moment, data=request.data, many=False, partial=True)
 
     if serializer.is_valid():
@@ -257,6 +264,11 @@ def subscribe(request, user_id):
 @permission_classes([IsAuthenticated])
 def update_user(request, user_id):
     user = CustomUser.objects.get(pk=user_id)
+
+    photo = request.data.get("photo")
+    if photo is not None:
+        user.photo = photo
+        user.save()
 
     serializer = UserSerializer(user, data=request.data, many=False, partial=True)
 

@@ -17,7 +17,7 @@ const Login = () => {
 		const flag = await login(formData)
 
 		if (flag) {
-			navigate("/home")
+			navigate("/")
 		}
 	}
 

@@ -3,9 +3,8 @@ import {AiFillHeart, AiOutlineHeart} from "react-icons/ai";
 import {useEffect, useRef, useState} from "react";
 import {Comment} from "../../utils/types";
 import {warningMessage} from "../../utils/toasts";
-import {api} from "../../utils/api";
 import {useAuth} from "../../hooks/users/useAuth";
-import {useToken} from "../../hooks/users/useToken";
+import {api} from "modules/api.ts";
 
 const CommentLikeButton = ({comment}:{comment:Comment}) => {
 
@@ -13,8 +12,6 @@ const CommentLikeButton = ({comment}:{comment:Comment}) => {
     const [liked, setLiked] = useState(comment.liked)
 
     const {is_authenticated} = useAuth()
-
-    const {access_token} = useToken()
 
     const ref = useRef<HTMLInputElement | null>(null)
 
@@ -40,11 +37,7 @@ const CommentLikeButton = ({comment}:{comment:Comment}) => {
             return
         }
 
-        const response = await api.post(`comments/${comment.id}/like/`, {}, {
-            headers: {
-                'authorization': access_token
-            }
-        })
+        const response = await api.post(`comments/${comment.id}/like/`)
 
         if (response.status == 201) {
             setLikes(response.data)

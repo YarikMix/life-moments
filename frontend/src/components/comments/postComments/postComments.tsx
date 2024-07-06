@@ -2,20 +2,14 @@ import "./postComments.sass"
 import PostComment from "../postComment/postComment";
 import {useEffect, useState} from "react";
 import {Comment} from "../../../utils/types";
-import {api} from "../../../utils/api";
-import {useToken} from "../../../hooks/users/useToken";
+import {api} from "modules/api.ts";
 
 const PostComments = ({post}) => {
-
-	const {access_token} = useToken()
 
 	const [comments, setComments] = useState<Comment[]>([])
 
 	const fetchComments = async () => {
 		const {data} = await api.get(`moments/${post.id}/comments/`, {
-			headers: {
-				'authorization': access_token
-			},
 			params: {
 				limit: 2
 			}

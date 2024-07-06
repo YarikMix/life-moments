@@ -21,7 +21,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Почта")
     username = models.CharField(max_length=30, verbose_name="Имя")
-    photo = models.ImageField(default="users/1.png", upload_to="users/", verbose_name="Картинка")
+    photo = models.ImageField(upload_to="users/",default="images/users/deafault.png", verbose_name="Картинка")
     date_register = models.DateField(default=timezone.now(), verbose_name="Дата регистрации")
 
     objects = CustomUserManager()
@@ -68,7 +68,7 @@ class Moment(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name="Автор", null=True)
     date_created = models.DateTimeField(default=timezone.now(), verbose_name="Дата создания")
     tags = models.ManyToManyField(Tag, verbose_name="Тэги")
-    image = models.ImageField(default="", upload_to="moments/", verbose_name="Картинка", width_field='image_width', height_field='image_height')
+    image = models.ImageField(upload_to="moments/", verbose_name="Картинка", width_field='image_width', height_field='image_height', null=True)
     image_width = models.IntegerField(default=100)
     image_height = models.IntegerField(default=100)
 

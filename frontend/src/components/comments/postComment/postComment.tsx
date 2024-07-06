@@ -3,18 +3,14 @@ import {Link} from "react-router-dom";
 import {Comment} from "../../../utils/types";
 import moment from "moment";
 import {ru} from "../../../utils/momentLocalization";
-import {DOMEN} from "../../../utils/consts";
 import CommentLikeButton from "../../commentLikeButton/commentLikeButton";
 
 const PostComment = ({comment}:{comment:Comment}) => {
-
-	const avatar = `${DOMEN}/${comment.author.photo}`
-
 	return (
 		<div className="comment-wrapper">
 
 			<Link to="/profile/1">
-				<img src={avatar} alt=""/>
+				<img src={comment.author.photo} alt=""/>
 			</Link>
 
 			<div className="comment-details">
