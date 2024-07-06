@@ -1,24 +1,24 @@
 import "./register.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
-import {useAuth} from "../../../hooks/users/useAuth";
+import {useDispatch} from "react-redux";
+import {registerUser, T_UserRegisterCredentials} from "store/users/authSlice.ts";
+import React from "react";
 
 const Register = () => {
 
 	const navigate = useNavigate()
 
-	const {register} = useAuth()
+    const dispatcher = useDispatch()
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e:React.FormEvent) => {
 		e.preventDefault()
 
-		const formData = new FormData(e.target)
+        const data = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as T_UserRegisterCredentials
 
-		const flag = await register(formData)
+		dispatcher(registerUser(data))
 
-		if (flag) {
-			navigate("/")
-		}
+        navigate("/")
 	}
 
 	return (

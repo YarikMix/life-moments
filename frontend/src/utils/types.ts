@@ -1,4 +1,4 @@
-export interface User {
+export interface I_User {
 	id: number,
 	email: string,
 	username: string,
@@ -11,7 +11,7 @@ export interface User {
 
 export interface Moment {
 	id: number,
-	author: User,
+	author: I_User,
 	tags: MomentTag[],
 	comments: Comment[],
 	likes: number,
@@ -24,7 +24,7 @@ export interface Moment {
 
 export interface Comment {
 	id: number,
-	author: User,
+	author: I_User,
 	content: string,
 	date_created: string,
 	likes: number,
@@ -33,21 +33,21 @@ export interface Comment {
 
 export interface Subscribe {
 	id: number,
-	author: User,
-	subscriber: User,
+	author: I_User,
+	subscriber: I_User,
 	date_subscribe: string
 }
 
 export interface LikeMoment {
 	id: number,
-	user: User,
+	user: I_User,
 	comment: Comment,
 	date_created: string
 }
 
 export interface LikeComment {
 	id: number,
-	user: User,
+	user: I_User,
 	moment: Moment,
 	date_created: string
 }

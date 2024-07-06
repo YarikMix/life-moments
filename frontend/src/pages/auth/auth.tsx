@@ -3,26 +3,16 @@ import {useEffect, useState} from "react";
 import Register from "./register/register";
 import {Link} from "react-router-dom";
 import "./auth.sass"
-import {useAuth} from "../../hooks/users/useAuth";
-import {useNavigate} from "react-router-dom"
+import {useDispatch} from "react-redux";
+import {checkUser} from "store/users/authSlice.ts";
 
 const Auth = () => {
 
-	const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-	const {auth} = useAuth()
-
-	const handleAuth = async () => {
-		const flag = await auth()
-		if (flag) {
-			navigate("/")
-		}
-	}
-
-	useEffect(() => {
-		handleAuth()
-	}, [])
-
+    useEffect(() => {
+        dispatch(checkUser())
+    }, [dispatch]);
 
 	const [mode, setMode] = useState<number>(0)
 

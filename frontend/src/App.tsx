@@ -1,25 +1,30 @@
 import './Styles/Main.sass'
 import './Styles/Reset.sass'
 import './Styles/Fonts.sass'
+import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes, Route, Outlet, Navigate} from "react-router-dom";
 import Auth from "./pages/auth/auth";
-import Navbar from "./components/navbar/navbar";
 import Home from "./pages/home/home";
 import ProfilePage from "./pages/profilePage/profilePage";
 import PostPage from "./pages/postPage/postPage";
-import {
-    QueryClient,
-    QueryClientProvider,
-} from 'react-query'
-import {Provider} from "react-redux";
-import store from "./store/store"
+import {Provider, useDispatch} from "react-redux";
 import {ToastContainer} from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import {useEffect} from "react";
+import {checkUser} from "store/users/authSlice.ts";
+import Header from "components/Header";
+import store from "src/store";
 
 const Layout = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(checkUser())
+    }, []);
+
     return (
         <div>
-            <Navbar />
+            <Header />
             <div className="content-wrapper">
                 <Outlet />
             </div>
@@ -27,48 +32,44 @@ const Layout = () => {
     )
 }
 
-const queryClient = new QueryClient()
-
 function App() {
 
     return (
-        <QueryClientProvider client={queryClient}>
 
-            <Provider store={store}>
+        <Provider store={store}>
 
-                <BrowserRouter>
+            <BrowserRouter>
 
-                    <ToastContainer />
+                <ToastContainer />
 
-                    <Routes>
+                <Routes>
 
-                        <Route path="auth/" element={<Navigate to="login/" replace />} />
+                    <Route path="auth/" element={<Navigate to="login/" replace />} />
 
-                        <Route path="auth/" element={<Auth />}>
+                    <Route path="auth/" element={<Auth />}>
 
-                            <Route path="login/" element={null} />
+                        <Route path="login/" element={null} />
 
-                            <Route path="register/" element={null}  />
+                        <Route path="register/" element={null}  />
 
-                        </Route>
+                    </Route>
 
-                        <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<Layout />}>
 
-                            <Route path="/" element={<Home/>} />
+                        <Route path="/" element={<Home/>} />
 
-                            <Route path="profile/:id" element={<ProfilePage />} />
+                        <Route path="profile/:id" element={<ProfilePage />} />
 
-                            <Route path="posts/:id" element={<PostPage/>} />
+                        <Route path="posts/:id" element={<PostPage/>} />
 
-                        </Route>
+                    </Route>
 
-                    </Routes>
+                </Routes>
 
-                </BrowserRouter>
+            </BrowserRouter>
 
-            </Provider>
+        </Provider>
 
-        </QueryClientProvider>
     )
 }
 

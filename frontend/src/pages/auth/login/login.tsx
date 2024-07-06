@@ -1,24 +1,24 @@
 import "./login.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
-import {useAuth} from "../../../hooks/users/useAuth";
+import {useDispatch} from "react-redux";
+import {loginUser, T_UserLoginCredentials} from "store/users/authSlice.ts";
+import React from "react";
 
 const Login = () => {
 
 	const navigate = useNavigate()
 
-	const {login} = useAuth()
+    const dispatcher = useDispatch()
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault()
 
-		const formData = new FormData(e.target)
+		const data = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as T_UserLoginCredentials
 
-		const flag = await login(formData)
+		dispatcher(loginUser(data))
 
-		if (flag) {
-			navigate("/")
-		}
+        navigate("/")
 	}
 
 	return (

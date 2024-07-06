@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {useParams} from "react-router-dom"
 import OwnerProfile from "./ownerProfile/ownerProfile";
+import {Helmet} from "react-helmet"
 
 const ProfilePage = () => {
 
@@ -19,27 +20,28 @@ const ProfilePage = () => {
 	const {user} = useAuth()
 
 	useEffect(() => {
-		console.log(is_authenticated)
-
 		if (!is_authenticated) {
 			navigate("/auth/login/")
 		}
-
-		document.title = 'Профиль'
 	}, [])
 
 	return (
-		<div className="profile-page-wrapper">
+        <>
+            <Helmet>
+                <title>Профиль</title>
+            </Helmet>
+            <div className="profile-page-wrapper">
 
-			<PostsList user_id={id} showPostForm={true}/>
+                <PostsList user_id={id} showPostForm={true}/>
 
-			<div className="right-bar-wrapper">
-				{user.id == id ? <OwnerProfile /> : <UserProfile user_id={id}/> }
-				<Subscribers user_id={id} />
-			</div>
+                <div className="right-bar-wrapper">
+                    {user?.id == id ? <OwnerProfile/> : <UserProfile user_id={id}/>}
+                    <Subscribers user_id={id}/>
+                </div>
 
-		</div>
-	)
+            </div>
+        </>
+    )
 }
 
 export default ProfilePage;

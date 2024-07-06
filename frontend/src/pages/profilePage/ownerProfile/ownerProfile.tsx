@@ -5,37 +5,39 @@ import CustomButton from "../../../components/customButton/CustomButton";
 import EditProfile from "./editProfile/editProfile";
 import {useNavigate} from "react-router-dom"
 import moment from "moment";
+import {useDispatch} from "react-redux";
+import {logoutUser} from "store/users/authSlice.ts";
 
 const OwnerProfile = () => {
 
     const navigate = useNavigate()
 
-    const {user, logOut} = useAuth()
+    const {user} = useAuth()
 
     const [isOpen, setIsOpen] = useState(false)
+
+    const dispatcher = useDispatch()
 
     const handleEditProfileButtonClick = () => {
         setIsOpen(true)
     }
 
     const handleLogOut = async () => {
-        const flag = await logOut()
-        if (flag) {
-            navigate("/auth/login")
-        }
+        dispatcher(logoutUser())
+        navigate("/auth/login")
     }
 
     return (
         <div className="user-profile-wrapper">
 
-            <img className="user-avatar" src={user.photo} alt=""/>
+            <img className="user-avatar" src={user?.photo} alt=""/>
 
             <div className="user-info-container">
-                <span>Никнейм: {user.username}</span>
-                <span>Почта: {user.email}</span>
-                <span>Дата регистрации: {moment(user.date_register).locale(ru()).format("D MMMM")}</span>
-                <span>Рейтинг: {user.rating}</span>
-                <span>Подписчиков: {user.subscribers_count}</span>
+                <span>Никнейм: {user?.username}</span>
+                <span>Почта: {user?.email}</span>
+                <span>Дата регистрации: {moment(user?.date_register).locale(ru()).format("D MMMM")}</span>
+                <span>Рейтинг: {user?.rating}</span>
+                <span>Подписчиков: {user?.subscribers_count}</span>
             </div>
 
             <div className="edit-button-container">
