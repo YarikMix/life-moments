@@ -10,9 +10,9 @@ import PostPage from "./pages/postPage/postPage";
 import {Provider, useDispatch} from "react-redux";
 import {ToastContainer} from "react-toastify";
 import {useEffect} from "react";
-import {checkUser} from "store/users/authSlice.ts";
 import Header from "components/Header";
 import store from "src/store";
+import {checkUser} from "store/sagas/auth.ts";
 
 const Layout = () => {
 

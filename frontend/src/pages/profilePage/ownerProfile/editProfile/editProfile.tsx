@@ -7,10 +7,12 @@ import CustomButton from "../../../../components/customButton/CustomButton";
 import {useAuth} from "../../../../hooks/users/useAuth";
 import {successMessage} from "../../../../utils/toasts";
 import {api} from "modules/api.ts";
+import {useDispatch} from "react-redux";
+import {updateUser} from "store/users/authSlice.ts";
 
 const EditProfile = ({isOpen, setIsOpen}) => {
 
-	const {user, avatar, setUser} = useAuth()
+	const {user, avatar} = useAuth()
 
 	const [username, setUsername] = useState<string>(user.username)
 
@@ -18,6 +20,8 @@ const EditProfile = ({isOpen, setIsOpen}) => {
 
 	const [imgFile, setImgFile] = useState<File | undefined>()
 	const [imgURL, setImgURL] = useState<string | undefined>(avatar)
+
+    const dispatcher = useDispatch()
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files) {
@@ -40,14 +44,14 @@ const EditProfile = ({isOpen, setIsOpen}) => {
 			form_data.append('photo', imgFile, imgFile.name)
 		}
 
-		const response = await api.put(`/users/${user.id}/update/`, form_data, {
+		const response = await api.put(`/users/${user?.id}/update/`, form_data, {
 			headers: {
 				'content-type': 'multipart/form-data'
 			}
 		})
 
 		if (response.status == 200) {
-			setUser(response.data)
+			dispatcher(updateUser(response.data))
 			successMessage("Настройки профиля успешно сохранены!")
 		}
 	}

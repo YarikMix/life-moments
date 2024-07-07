@@ -4,7 +4,7 @@ import Register from "./register/register";
 import {Link} from "react-router-dom";
 import "./auth.sass"
 import {useDispatch} from "react-redux";
-import {checkUser} from "store/users/authSlice.ts";
+import {checkUser} from "store/sagas/auth.ts";
 
 const Auth = () => {
 

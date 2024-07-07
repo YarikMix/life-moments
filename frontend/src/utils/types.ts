@@ -57,3 +57,13 @@ export interface MomentTag {
 	name: string
 }
 
+export type T_UserLoginCredentials = {
+    email: string
+    password: string
+}
+
+export type T_UserRegisterCredentials = {
+    username: string
+    email: string
+    password: string
+}

@@ -2,8 +2,9 @@ import "./register.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux";
-import {registerUser, T_UserRegisterCredentials} from "store/users/authSlice.ts";
 import React from "react";
+import {registerUser} from "store/sagas/auth.ts";
+import {T_UserRegisterCredentials} from "src/utils/types.ts";
 
 const Register = () => {
 

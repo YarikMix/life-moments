@@ -2,8 +2,9 @@ import "./login.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux";
-import {loginUser, T_UserLoginCredentials} from "store/users/authSlice.ts";
 import React from "react";
+import {loginUser} from "store/sagas/auth.ts";
+import {T_UserLoginCredentials} from "src/utils/types.ts";
 
 const Login = () => {
 

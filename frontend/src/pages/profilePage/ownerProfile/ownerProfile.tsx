@@ -6,7 +6,7 @@ import EditProfile from "./editProfile/editProfile";
 import {useNavigate} from "react-router-dom"
 import moment from "moment";
 import {useDispatch} from "react-redux";
-import {logoutUser} from "store/users/authSlice.ts";
+import {logoutUser} from "store/sagas/auth.ts";
 
 const OwnerProfile = () => {
 
