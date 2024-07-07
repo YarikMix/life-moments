@@ -34,7 +34,7 @@ export function* loginUserSaga(action:PayloadAction<T_UserLoginCredentials>) {
 }
 
 export function* authWatcherSaga() {
-    yield takeEvery(CHECK_USER, checkUserSaga);
+    // yield takeEvery(CHECK_USER, checkUserSaga);
     yield takeEvery(LOGIN_USER, loginUserSaga);
     yield takeEvery(REGISTER_USER, registerUserSaga);
     yield takeEvery(LOGOUT_USER, logoutUserSaga);

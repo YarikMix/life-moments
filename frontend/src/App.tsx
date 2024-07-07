@@ -1,6 +1,6 @@
-import './Styles/Main.sass'
-import './Styles/Reset.sass'
-import './Styles/Fonts.sass'
+import 'styles/main.sass'
+import 'styles/reset.sass'
+import 'styles/fonts.sass'
 import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Routes, Route, Outlet, Navigate} from "react-router-dom";
 import Auth from "./pages/auth/auth";
