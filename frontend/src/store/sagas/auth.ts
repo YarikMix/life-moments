@@ -6,12 +6,16 @@ import {put, takeEvery, call } from "redux-saga/effects";
 import {successMessage} from "src/utils/toasts.ts";
 import {cleanUser, updateAuthenticated, updateUser} from "store/users/authSlice.ts";
 
+const checkUserRequest = () : Promise<AxiosResponse<I_User>> => {
+    return api.post("check/")
+}
+
 export const CHECK_USER = "auth/checkUser"
 export const checkUser = createAction(CHECK_USER)
 
 export function* checkUserSaga() {
     console.log("checkUserSaga")
-    const response:AxiosResponse<I_User> = yield api.post(`check/`) as Promise<AxiosResponse<I_User>>;
+    const response:AxiosResponse<I_User> = yield call(checkUserRequest);
     console.log(response)
     if (response.status == 200) {
         yield put(updateUser(response.data));
@@ -20,12 +24,18 @@ export function* checkUserSaga() {
 }
 
 
+
+
+const userLoginRequest = (data:T_UserLoginCredentials) : Promise<AxiosResponse<I_User>> => {
+    return api.post("login/", data)
+}
+
 export const LOGIN_USER = "auth/loginUser"
 export const loginUser = createAction<T_UserLoginCredentials>(LOGIN_USER)
 
 export function* loginUserSaga(action:PayloadAction<T_UserLoginCredentials>) {
     console.log("loginUserSaga")
-    const response:AxiosResponse<I_User> = yield api.post(`login/`, action.payload) as Promise<AxiosResponse<I_User>>;
+    const response:AxiosResponse<I_User> = yield call(userLoginRequest, action.payload);
     if (response.status == 200) {
         yield put(updateUser(response.data));
         yield put(updateAuthenticated(true));
@@ -34,10 +44,10 @@ export function* loginUserSaga(action:PayloadAction<T_UserLoginCredentials>) {
 }
 
 export function* authWatcherSaga() {
-    // yield takeEvery(CHECK_USER, checkUserSaga);
+    yield takeEvery(CHECK_USER, checkUserSaga);
     yield takeEvery(LOGIN_USER, loginUserSaga);
-    yield takeEvery(REGISTER_USER, registerUserSaga);
-    yield takeEvery(LOGOUT_USER, logoutUserSaga);
+    // yield takeEvery(REGISTER_USER, registerUserSaga);
+    // yield takeEvery(LOGOUT_USER, logoutUserSaga);
 }
 
 
@@ -50,7 +60,7 @@ export function* registerUserSaga(action:PayloadAction<T_UserRegisterCredentials
     const response:AxiosResponse<I_User> = yield api.post(`register/`, action.payload) as Promise<AxiosResponse<I_User>>;
     console.log(response)
     if (response.status == 201) {
-        yield call(checkUserSaga);
+        // yield call(checkUserSaga);
         // successMessage(`Добро пожаловать, ${response.data["username"]}!`)
     }
 }
