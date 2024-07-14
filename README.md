@@ -1,10 +1,10 @@
 # Веб-приложение "Моменты жизни"
 
 * Бэкенд: Django REST Framework, JWT
-* Фронтенд: React, Redux Toolkit, Redux Saga, Sass
+* Фронтенд: React, Redux Toolkit, Redux Saga, Redux Persist, Sass, styled-components
 * База данных: PostgreSQL
 * S3: Minio
-* Другие используемые технологии: Docker, nginx
+* Другие используемые технологии: Docker, Nginx
 
 ## Основные страницы сайта
 
