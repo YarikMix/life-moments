@@ -9,7 +9,7 @@ export interface I_User {
 	subscribed: boolean
 }
 
-export interface Moment {
+export interface I_Moment {
 	id: number,
 	author: I_User,
 	tags: MomentTag[],
@@ -48,7 +48,7 @@ export interface LikeMoment {
 export interface LikeComment {
 	id: number,
 	user: I_User,
-	moment: Moment,
+	moment: I_Moment,
 	date_created: string
 }
 
@@ -66,4 +66,9 @@ export type T_UserRegisterCredentials = {
     username: string
     email: string
     password: string
+}
+
+export enum AuthForm {
+    login,
+    register
 }

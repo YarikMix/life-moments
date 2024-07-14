@@ -11,7 +11,7 @@ import {Helmet} from "react-helmet"
 
 const ProfilePage = () => {
 
-	const { id } = useParams<{id?: string}>()
+	const { id } = useParams<{id: string}>()
 
 	const {is_authenticated} = useAuth()
 
@@ -20,10 +20,8 @@ const ProfilePage = () => {
 	const {user} = useAuth()
 
 	useEffect(() => {
-		if (!is_authenticated) {
-			navigate("/auth/login/")
-		}
-	}, [])
+		!is_authenticated && navigate("/login")
+	}, [is_authenticated])
 
 	return (
         <>

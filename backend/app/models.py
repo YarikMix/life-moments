@@ -21,7 +21,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, verbose_name="Почта")
     username = models.CharField(max_length=30, verbose_name="Имя")
-    photo = models.ImageField(upload_to="users/",default="images/users/deafault.png", verbose_name="Картинка")
+    photo = models.ImageField(upload_to="users/", default="users/deafault.png", verbose_name="Картинка")
     date_register = models.DateField(default=timezone.now(), verbose_name="Дата регистрации")
 
     objects = CustomUserManager()

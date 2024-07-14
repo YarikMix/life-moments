@@ -1,14 +1,10 @@
-import {updatePost, updateTitle, updateContent, updateLikes, updateLiked, updateTags, updateComments } from "../../store/posts/postSlice";
+import {updateTitle, updateContent, updateLikes, updateLiked, updateTags, updateComments } from "store/posts/postSlice";
 import {useDispatch, useSelector} from "react-redux";
 
 export function usePost() {
     const {post, title, content, likes, liked, tags, comments} = useSelector(state => state.post)
 
     const dispatch = useDispatch()
-
-    const setPost = (value) => {
-        dispatch(updatePost(value))
-    }
 
     const setTitle = (value) => {
         dispatch(updateTitle(value))
@@ -42,7 +38,6 @@ export function usePost() {
         liked,
         tags,
         comments,
-        setPost,
         setTitle,
         setContent,
         setLikes,

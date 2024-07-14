@@ -2,13 +2,16 @@ import "./login.sass"
 import {FaGithub, FaGoogle, FaFacebook, FaLinkedin} from "react-icons/fa6"
 import {useNavigate} from "react-router-dom"
 import {useDispatch} from "react-redux";
-import React from "react";
+import React, {useEffect} from "react";
 import {loginUser} from "store/sagas/auth.ts";
 import {T_UserLoginCredentials} from "src/utils/types.ts";
+import {useAuth} from "src/hooks/users/useAuth.ts";
 
 const Login = () => {
 
-	const navigate = useNavigate()
+    const {is_authenticated} = useAuth()
+
+    const navigate = useNavigate()
 
     const dispatcher = useDispatch()
 
@@ -18,9 +21,11 @@ const Login = () => {
 		const data = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as T_UserLoginCredentials
 
 		dispatcher(loginUser(data))
-
-        navigate("/")
 	}
+
+    useEffect(() => {
+        is_authenticated && navigate("/")
+    }, [is_authenticated]);
 
 	return (
 

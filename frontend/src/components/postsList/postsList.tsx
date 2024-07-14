@@ -42,9 +42,9 @@ const PostsList = ({user_id, showPostForm, query, fetching}) => {
 	return (
 		<div className="posts-list-wrapper">
 
-			{showPostForm && is_authenticated && user_id == user.id && <AddPostForm data={data} setData={setData}/> }
+			{showPostForm && is_authenticated && user_id == user?.id && <AddPostForm data={data} setData={setData}/> }
 
-			{!fetching && data.length == 0 && <span className="not-found-label">Ничего не найдено ;(</span>}
+			{/*{!fetching && data.length == 0 && <span className="not-found-label">Ничего не найдено ;(</span>}*/}
 
 			{posts}
 

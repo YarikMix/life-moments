@@ -1,8 +1,8 @@
 import "./subscriber.sass"
 import {Link} from "react-router-dom";
-import {User} from "../../../../utils/types";
+import {I_User} from "utils/types.ts";
 
-const Subscriber = ({user}:{user:User}) => {
+const Subscriber = ({user}:{user:I_User}) => {
 
 	return (
 		<Link to={`/profile/${user.id}`} className="subscriber-wrapper">

@@ -3,8 +3,9 @@ import Subscriber from "./subscriber/subscriber";
 import {useEffect} from "react";
 import SubscribersList from "./subscribersList/subscribersList";
 import {useSubscribers} from "../../../hooks/users/useSubscribers";
+import {I_User} from "utils/types.ts";
 
-const Subscribers = ({user_id}) => {
+const Subscribers = ({user_id}:{user_id:string}) => {
 
 	const {subscribers, setIsOpen, fetchSubscribers} = useSubscribers()
 
@@ -25,10 +26,6 @@ const Subscribers = ({user_id}) => {
 		)
 	}
 
-	const items = subscribers.map((subscriber) => (
-		<Subscriber user={subscriber} key={subscriber.id}/>
-	))
-
 	return (
 		<div className="subscribers-wrapper">
 
@@ -37,11 +34,17 @@ const Subscribers = ({user_id}) => {
 				<span className="show-button" onClick={showSubscribersList}>Посмотреть всех</span>
 			</div>
 
-			<div className="bottom-container">
-				{items}
-			</div>
+            {subscribers.length > 0 ?
+                <div className="bottom-container">
+                    {subscribers.map((subscriber:I_User) => (
+                        <Subscriber user={subscriber} key={subscriber.id}/>
+                    ))}
+                </div>
+                :
+                <span className="subscribers-not-found-label">У вас нет подписчиков</span>
+            }
 
-			<SubscribersList user_id={user_id} setIsOpen={setIsOpen} />
+            <SubscribersList user_id={user_id} setIsOpen={setIsOpen} />
 
 		</div>
 	)

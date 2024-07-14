@@ -24,7 +24,7 @@ const OwnerProfile = () => {
 
     const handleLogOut = async () => {
         dispatcher(logoutUser())
-        navigate("/auth/login")
+        navigate("/login")
     }
 
     return (

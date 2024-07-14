@@ -32,7 +32,7 @@ const Header = () => {
 
 					<EventFeed />
 
-					<Link to={is_authenticated ? `/profile/${user?.id}` : "/auth/login/"}>
+					<Link to={is_authenticated ? `/profile/${user?.id}` : "login/"}>
 						<AiOutlineUser className="menu-icon" />
 					</Link>
 

@@ -16,6 +16,8 @@ const postSlice = createSlice({
     reducers: {
         updatePost: (state, action) => {
             state.post = action.payload
+            state.likes = action.payload.likes
+            state.liked = action.payload.liked
         },
         updateTitle: (state, action) => {
             state.title = action.payload

@@ -1,6 +1,7 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import {persistStore, persistReducer} from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 import createSagaMiddleware from 'redux-saga';
-
 import authReducer from "./users/authSlice"
 import subscribersReducer from "./users/subscribersSlice"
 import addPostFormReducer from "./posts/addPostFormSlice"
@@ -9,15 +10,27 @@ import rootSaga from "store/sagas";
 
 const sagaMiddleware = createSagaMiddleware();
 
+const persistConfig = {
+    key: 'auth',
+    storage
+}
+
+const rootReducer = combineReducers({
+    auth: persistReducer(persistConfig, authReducer),
+    post: postReducer,
+    addPostForm: addPostFormReducer,
+    subscribers: subscribersReducer
+})
+
 export const store = configureStore({
-    reducer: {
-        auth: authReducer,
-        post: postReducer,
-        addPostForm: addPostFormReducer,
-        subscribers: subscribersReducer
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware)
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        thunk: false,
+        serializableCheck: false
+    }).concat(sagaMiddleware)
 });
+
+export const persister = persistStore(store)
 
 sagaMiddleware.run(rootSaga);
 

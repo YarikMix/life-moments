@@ -24,7 +24,7 @@ const Home = () => {
                 <div className="left-container">
                     <SearchBar setFetching={setFetching} setQuery={setQuery}/>
                     {fetching && <Loader/>}
-                    {!fetching && <PostsList owner={user} showPostForm={false} query={query} fetching={fetching} setFetching={setFetching} />}
+                    {!fetching && <PostsList user_id={user?.id} showPostForm={false} query={query} fetching={fetching} />}
                 </div>
                 {is_authenticated && <RightBar/>}
             </div>
