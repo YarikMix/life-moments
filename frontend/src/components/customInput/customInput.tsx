@@ -1,6 +1,6 @@
 import "./customInput.sass"
 
-const customInput = ({placeholder, value, onChange, id, required, type="text"}) => {
+const customInput = ({placeholder, value, setValue, id, required, type="text"}) => {
     return (
         <input
             className="custom-input"
@@ -8,7 +8,7 @@ const customInput = ({placeholder, value, onChange, id, required, type="text"}) 
             placeholder={placeholder}
             id={id}
             value={value}
-            onChange={onChange}
+            onChange={(e) => setValue(e.target.value)}
             required={required}
         />
     )

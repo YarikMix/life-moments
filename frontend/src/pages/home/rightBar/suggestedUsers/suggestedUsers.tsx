@@ -1,29 +1,18 @@
 import "./suggestedUsers.sass"
 import SuggestedUser from "./suggestedUser/suggestedUser";
-import {useAuth} from "../../../../hooks/users/useAuth";
-import {useEffect, useState} from "react";
-import {User} from "../../../../utils/types";
-import {api} from "modules/api.ts";
+import {useEffect} from "react";
+import {useAuth} from "hooks/users/useAuth.ts";
+import {useSuggestions} from "hooks/users/useSuggestions.ts";
 
 const SuggestedUsers = () => {
 
-	const {user} = useAuth()
+	const {user_id} = useAuth()
 
-	const [suggestedUsers, setSuggestedUsers] = useState<User[]>([])
-
-	const fetchSuggestedUsers = async () => {
-		const {data} = await api.get(`users/${user.id}/suggested_users/`)
-
-		setSuggestedUsers(data)
-	}
+    const {suggestedUsers, fetchSuggestedUsers} = useSuggestions()
 
 	useEffect(() => {
-		fetchSuggestedUsers()
+		fetchSuggestedUsers(user_id as string)
 	}, [])
-
-	const items = suggestedUsers.map(suggestedUser =>
-		<SuggestedUser user={suggestedUser} key={suggestedUser.id}/>
-	)
 
 	return (
 		<div className="suggested-users-wrapper">
@@ -34,7 +23,13 @@ const SuggestedUsers = () => {
 
 			<div className="bottom">
 
-				{suggestedUsers.length > 0 ? items : <span className="empty-label">Пусто ;(</span>}
+				{suggestedUsers.length > 0 ?
+                    suggestedUsers.map(suggestedUser =>
+                        <SuggestedUser user={suggestedUser} key={suggestedUser.id}/>
+                    )
+                    :
+                    <span className="empty-label">Пусто ;(</span>
+                }
 
 			</div>
 

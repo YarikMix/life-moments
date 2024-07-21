@@ -1,6 +1,11 @@
 import "./CustomButton.sass"
 
-const CustomButton = ({children , onClick}) => {
+interface I_Props {
+    children: any,
+    onClick: () => void
+}
+
+const CustomButton = ({children, onClick}:I_Props) => {
     return (
         <button className="custom-button" onClick={onClick}>{children}</button>
     )

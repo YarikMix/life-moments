@@ -1,7 +1,8 @@
 export interface I_User {
-	id: number,
+	id: string,
 	email: string,
-	username: string,
+    firstName: string,
+    lastName: string,
 	date_register: string,
 	rating: number,
 	subscribers_count: number,
@@ -63,12 +64,9 @@ export type T_UserLoginCredentials = {
 }
 
 export type T_UserRegisterCredentials = {
-    username: string
+    firstName: string
+    lastName: string
+    phone: string
     email: string
     password: string
-}
-
-export enum AuthForm {
-    login,
-    register
 }

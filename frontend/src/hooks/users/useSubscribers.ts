@@ -1,36 +1,28 @@
 import {useDispatch, useSelector} from 'react-redux';
-import {updateIsOpen, updateSubscribers} from "../../store/users/subscribersSlice";
-import {api} from "modules/api.ts";
+import {updateIsOpen} from "../../store/users/subscribersSlice";
+import {fetchSubscribers} from "store/sagas/subscribers.ts";
+import {RootState} from "store/store.ts";
 
 export function useSubscribers() {
-    const {isOpen, subscribers} = useSelector(state => state.subscribers)
+    const {isOpen, subscribers} = useSelector((state:RootState) => state.subscribers)
 
     const dispatch = useDispatch()
 
-    const setIsOpen = (value) => {
+    const setIsOpen = (value:boolean) => {
         dispatch(updateIsOpen(value))
     }
 
-    const setSubscribers = (value) => {
-        dispatch(updateSubscribers(value))
+    const setOpen = () => {
+        dispatch(updateIsOpen(true))
     }
 
-    const fetchSubscribers = async (id) => {
-
-        const {data} = await api.get(`users/${id}/subscribers/`, {
-            params: {
-                limit: 6
-            }
-        })
-
-        setSubscribers(data["data"])
-
-    }
+    const fetchUserSubscribers = (user_id:string) => dispatch(fetchSubscribers(user_id))
 
     return {
         isOpen,
         subscribers,
         setIsOpen,
-        fetchSubscribers
+        setOpen,
+        fetchUserSubscribers
     }
 }

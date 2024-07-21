@@ -1,0 +1,128 @@
+.pageWrapper {
+	width: 100vw;
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #5f41e4;
+
+	.loginContainer {
+		display: flex;
+		flex-direction: column;
+		border-radius: 16px;
+		background: #fff;
+		max-width: 410px;
+		padding: 32px 24px;
+		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+		.formTitle {
+			text-align: center;
+			font-size: 28px;
+			font-weight: 600;
+			margin-bottom: 20px;
+		}
+
+		.inputWrapper {
+			height: 54px;
+			width: 100%;
+			margin-bottom: 25px;
+			position: relative;
+
+			.inputField {
+				height: 100%;
+				width: 100%;
+				padding: 0 48px 0 50px;
+				border-radius: 8px;
+				outline: none;
+				border: 1px solid #bfb3f2;
+				font-size: 18px;
+				transition: 0.2s ease;
+
+				&::placeholder {
+					color: #a395e0;
+				}
+
+				&:focus {
+					border-color: #5f41e4;
+				}
+
+				&[type=text] {
+					~ .showPasswordBtn {
+						opacity: 0;
+						transform: translateY(-50%) scale(0);
+					}
+
+					~ .hidePasswordBtn {
+						opacity: 1;
+						transform: translateY(-50%) scale(1);
+					}
+				}
+
+				&[type=password] {
+					~ .showPasswordBtn {
+						opacity: 1;
+						transform: translateY(-50%) scale(1);
+					}
+
+					~ .hidePasswordBtn {
+						opacity: 0;
+						transform: translateY(-50%) scale(0);
+					}
+				}
+			}
+
+			.togglePasswordBtn {
+				right: 14px;
+				cursor: pointer;
+			}
+
+			.icon {
+				left: 14px;
+				pointer-events: none;
+			}
+
+			svg {
+				color: #a395e0;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				font-size: 24px;
+				transition: 0.2s ease;
+			}
+		}
+
+		.loginButton {
+			width: 100%;
+			height: 54px;
+			background: #5f41e4;
+			cursor: pointer;
+			outline: none;
+			font-size: 20px;
+			color: #fff;
+			font-weight: 500;
+			border: none;
+			border-radius: 12px;
+			transition: 0.2s ease;
+
+			&:hover {
+				background: #4320df;
+			}
+		}
+
+		.signupText {
+			text-align: center;
+			margin-top: 24px;
+			font-weight: 500;
+		}
+
+		a {
+			color: #5f41e4;
+			font-weight: 500;
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}

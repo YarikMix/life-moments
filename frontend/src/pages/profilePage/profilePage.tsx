@@ -34,7 +34,7 @@ const ProfilePage = () => {
 
                 <div className="right-bar-wrapper">
                     {user?.id == id ? <OwnerProfile/> : <UserProfile user_id={id}/>}
-                    <Subscribers user_id={id}/>
+                    <Subscribers owner_id={id as string}/>
                 </div>
 
             </div>

@@ -1,5 +1,5 @@
 import {useAuth} from "../../../hooks/users/useAuth";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {ru} from "../../../utils/momentLocalization";
 import CustomButton from "../../../components/customButton/CustomButton";
 import EditProfile from "./editProfile/editProfile";
@@ -12,7 +12,7 @@ const OwnerProfile = () => {
 
     const navigate = useNavigate()
 
-    const {user} = useAuth()
+    const {user, is_authenticated} = useAuth()
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -24,8 +24,11 @@ const OwnerProfile = () => {
 
     const handleLogOut = async () => {
         dispatcher(logoutUser())
-        navigate("/login")
     }
+
+    useEffect(() => {
+        !is_authenticated && navigate("/login")
+    }, [is_authenticated]);
 
     return (
         <div className="user-profile-wrapper">
@@ -33,7 +36,7 @@ const OwnerProfile = () => {
             <img className="user-avatar" src={user?.photo} alt=""/>
 
             <div className="user-info-container">
-                <span>Никнейм: {user?.username}</span>
+                <span>Никнейм: {user?.firstName} {user?.lastName}</span>
                 <span>Почта: {user?.email}</span>
                 <span>Дата регистрации: {moment(user?.date_register).locale(ru()).format("D MMMM")}</span>
                 <span>Рейтинг: {user?.rating}</span>

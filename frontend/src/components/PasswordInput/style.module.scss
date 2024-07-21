@@ -1,0 +1,68 @@
+.inputWrapper {
+	height: 54px;
+	width: 100%;
+	margin-bottom: 25px;
+	position: relative;
+
+	.inputField {
+		height: 100%;
+		width: 100%;
+		padding: 0 48px 0 50px;
+		border-radius: 8px;
+		outline: none;
+		border: 1px solid #bfb3f2;
+		font-size: 18px;
+		transition: 0.2s ease;
+
+		&::placeholder {
+			color: #a395e0;
+		}
+
+		&:focus {
+			border-color: #5f41e4;
+		}
+
+		&[type=text] {
+			~ .showPasswordBtn {
+				opacity: 0;
+				transform: translateY(-50%) scale(0);
+			}
+
+			~ .hidePasswordBtn {
+				opacity: 1;
+				transform: translateY(-50%) scale(1);
+			}
+		}
+
+		&[type=password] {
+			~ .showPasswordBtn {
+				opacity: 1;
+				transform: translateY(-50%) scale(1);
+			}
+
+			~ .hidePasswordBtn {
+				opacity: 0;
+				transform: translateY(-50%) scale(0);
+			}
+		}
+	}
+
+	.togglePasswordBtn {
+		right: 14px;
+		cursor: pointer;
+	}
+
+	.icon {
+		left: 14px;
+		pointer-events: none;
+	}
+
+	svg {
+		color: #a395e0;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 24px;
+		transition: 0.2s ease;
+	}
+}

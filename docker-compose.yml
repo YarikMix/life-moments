@@ -1,29 +1,29 @@
 version: '3.7'
 
 services:
-  django:
-    build: ./backend
-    container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/usr/src/app
-    ports:
-      - "8000:8000"
-    environment:
-      PYTHONUNBUFFERED: 1
-    depends_on:
-      - pgdb
-      - migration
-      - minio
+  # django:
+  #   build: ./backend
+  #   container_name: django
+  #   command: python manage.py runserver 0.0.0.0:8000
+  #   volumes:
+  #     - ./backend:/usr/src/app
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     PYTHONUNBUFFERED: 1
+  #   depends_on:
+  #     - pgdb
+  #     - migration
+  #     - minio
 
-  migration:
-    build: ./backend
-    container_name: migration
-    command: bash -c "python manage.py makemigrations && python manage.py migrate --noinput && python manage.py fill_db"
-    volumes:
-      - ./backend:/usr/src/app
-    depends_on:
-      - pgdb
+  # migration:
+  #   build: ./backend
+  #   container_name: migration
+  #   command: bash -c "python manage.py makemigrations && python manage.py migrate --noinput && python manage.py fill_db"
+  #   volumes:
+  #     - ./backend:/usr/src/app
+  #   depends_on:
+  #     - pgdb
 
   pgdb:
     image: postgres:16.0-alpine
@@ -32,10 +32,25 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    ports:
+      - 127.0.0.1:5432:5432
     volumes:
       - type: volume
         source: pgdbdata
         target: /var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: nest_test@admin.com
+      PGADMIN_DEFAULT_PASSWORD: nest_test
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/www/nest_test/docker-volumes/pgadmin
+    ports:
+      - 127.0.0.1:5050:80
+    restart: unless-stopped
 
   minio:
     hostname: minio/minio:latest
@@ -80,14 +95,25 @@ services:
     depends_on:
       - minio
 
-  frontend:
-    build: ./frontend
-    container_name: frontend
+  redis:
+    container_name: redis
+    image: redis:6
+    volumes:
+      - redis:/data
     ports:
-      - "3000:3000"
-    environment:
-      - VITE_API_URL=http://django:8000
+      - 127.0.0.1:6379:6379
+    restart: unless-stopped
+
+  # frontend:
+  #   build: ./frontend
+  #   container_name: frontend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - VITE_API_URL=http://django:8000
   
 volumes:
   pgdbdata: null
   minio-data:
+  redis:
+  pgadmin:

@@ -30,7 +30,8 @@
       "store/*": ["store/*"],
       "styles/*": ["styles/*"],
       "modules/*": ["modules/*"],
-      "utils/*": ["utils/*"]
+      "utils/*": ["utils/*"],
+      "hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"],

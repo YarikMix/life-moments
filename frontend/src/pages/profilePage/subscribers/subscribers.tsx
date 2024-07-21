@@ -2,36 +2,27 @@ import "./subscribers.sass"
 import Subscriber from "./subscriber/subscriber";
 import {useEffect} from "react";
 import SubscribersList from "./subscribersList/subscribersList";
-import {useSubscribers} from "../../../hooks/users/useSubscribers";
 import {I_User} from "utils/types.ts";
+import {useSubscribers} from "hooks/users/useSubscribers.ts";
+import {useAuth} from "hooks/users/useAuth.ts";
 
-const Subscribers = ({user_id}:{user_id:string}) => {
+const Subscribers = ({owner_id}:{owner_id:string}) => {
 
-	const {subscribers, setIsOpen, fetchSubscribers} = useSubscribers()
+	const {subscribers, setIsOpen, setOpen, fetchUserSubscribers} = useSubscribers()
 
-	const showSubscribersList = () => {
-		setIsOpen(true)
-	}
+    const {user_id} = useAuth()
 
 	useEffect(() => {
 		setIsOpen(false)
-		fetchSubscribers(user_id)
-	}, [user_id])
-
-	if (subscribers == undefined) {
-		return (
-			<div>
-
-			</div>
-		)
-	}
+        fetchUserSubscribers(owner_id)
+	}, [owner_id])
 
 	return (
 		<div className="subscribers-wrapper">
 
 			<div className="top-container">
 				<span>Подписчики</span>
-				<span className="show-button" onClick={showSubscribersList}>Посмотреть всех</span>
+				<span className="show-button" onClick={setOpen}>Посмотреть всех</span>
 			</div>
 
             {subscribers.length > 0 ?
@@ -41,10 +32,10 @@ const Subscribers = ({user_id}:{user_id:string}) => {
                     ))}
                 </div>
                 :
-                <span className="subscribers-not-found-label">У вас нет подписчиков</span>
+                <span className="subscribers-not-found-label">{owner_id == user_id ? "У вас нет подписчиков" : "Еще никто не подписан"}</span>
             }
 
-            <SubscribersList user_id={user_id} setIsOpen={setIsOpen} />
+            <SubscribersList owner_id={owner_id} />
 
 		</div>
 	)

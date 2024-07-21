@@ -1,6 +1,4 @@
 import {Outlet, Route, Routes} from "react-router-dom";
-import Auth from "pages/auth/auth.tsx";
-import {AuthForm} from "utils/types.ts";
 import Home from "pages/home/home.tsx";
 import ProfilePage from "pages/profilePage/profilePage.tsx";
 import PostPage from "pages/postPage/postPage.tsx";
@@ -8,6 +6,8 @@ import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {checkUser} from "store/sagas/auth.ts";
 import Header from "components/Header";
+import LoginPage from "pages/LoginPage";
+import {RegisterPage} from "pages/RegisterPage/RegisterPage.tsx";
 
 const Layout = () => {
     return (
@@ -30,9 +30,9 @@ export const AppRoutes = () => {
     return (
         <Routes>
 
-            <Route path="login/" element={<Auth page={AuthForm.login}/>} />
+            <Route path="login/" element={<LoginPage />} />
 
-            <Route path="register/" element={<Auth page={AuthForm.register}/>}  />
+            <Route path="register/" element={<RegisterPage />}  />
 
             <Route path="/" element={<Layout />}>
 

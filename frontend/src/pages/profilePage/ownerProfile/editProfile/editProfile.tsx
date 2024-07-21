@@ -1,22 +1,24 @@
 import "./editProfile.sass"
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {BsFillCameraFill} from "react-icons/bs";
-import PopUpWindow from "../../../../components/popUpWindow/popUpWindow";
-import CustomInput from "../../../../components/customInput/customInput";
-import CustomButton from "../../../../components/customButton/CustomButton";
-import {useAuth} from "../../../../hooks/users/useAuth";
-import {successMessage} from "../../../../utils/toasts";
-import {api} from "modules/api.ts";
+import PopUpWindow from "components/popUpWindow/popUpWindow";
+import CustomInput from "components/customInput/customInput";
+import {useAuth} from "hooks/users/useAuth.ts";
 import {useDispatch} from "react-redux";
-import {updateUser} from "store/users/authSlice.ts";
+import {updateProfile} from "store/sagas/user.ts";
 
-const EditProfile = ({isOpen, setIsOpen}) => {
+interface I_Props {
+    isOpen: boolean
+    setIsOpen: (value:boolean) => void
+}
 
-	const {user, avatar} = useAuth()
+const EditProfile = ({isOpen, setIsOpen}:I_Props) => {
 
-	const [username, setUsername] = useState<string>(user.username)
+	const {userId, avatar, firstName, lastName, email} = useAuth()
 
-	const [email, setEmail] = useState<string>(user.email)
+	const [firstNameField, setFirstName] = useState<string>(firstName)
+    const [lastNameField, setLastName] = useState<string>(lastName)
+	const [emailField, setEmail] = useState<string>(email)
 
 	const [imgFile, setImgFile] = useState<File | undefined>()
 	const [imgURL, setImgURL] = useState<string | undefined>(avatar)
@@ -31,60 +33,56 @@ const EditProfile = ({isOpen, setIsOpen}) => {
 		}
 	}
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async (e:FormEvent) => {
 		e.preventDefault()
+
 		setIsOpen(false)
 
-		const form_data = new FormData()
+		const data = {
+            userId,
+            firstName: firstNameField,
+            lastName: lastNameField,
+            email: emailField,
+            photo: imgFile as File
+        }
 
-		form_data.append('username', username)
-		form_data.append('email', email)
-
-		if (imgFile != undefined) {
-			form_data.append('photo', imgFile, imgFile.name)
-		}
-
-		const response = await api.put(`/users/${user?.id}/update/`, form_data, {
-			headers: {
-				'content-type': 'multipart/form-data'
-			}
-		})
-
-		if (response.status == 200) {
-			dispatcher(updateUser(response.data))
-			successMessage("Настройки профиля успешно сохранены!")
-		}
+        dispatcher(updateProfile(data))
 	}
 
 	return (
 		<PopUpWindow isOpen={isOpen} setIsOpen={setIsOpen}>
-			<form className="profile-edit-wrapper" onSubmit={handleSubmit}>
+            <form className="profile-edit-wrapper" onSubmit={handleSubmit}>
 
-				<div className="profile-image-wrapper">
-					<div className="profile-image-container">
-						<img src={imgURL} className="user-avatar" alt=""/>
-						<div className="round">
-							<input type="file" accept="image/*" alt="" onChange={handleFileChange}/>
-							<BsFillCameraFill />
-						</div>
-					</div>
-				</div>
+                <div className="profile-image-wrapper">
+                    <div className="profile-image-container">
+                        <img src={imgURL} className="user-avatar" alt=""/>
+                        <div className="round">
+                            <input type="file" accept="image/*" alt="" onChange={handleFileChange}/>
+                            <BsFillCameraFill/>
+                        </div>
+                    </div>
+                </div>
 
-				<div className="input-container">
-					<label htmlFor="username">Никнейм</label>
-					<CustomInput placeholder="Никнейм" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required={true}/>
-				</div>
+                <div className="input-container">
+                    <label htmlFor="username">Имя</label>
+                    <CustomInput placeholder="Имя" id="username" value={firstNameField} setValue={setFirstName} required={true}/>
+                </div>
 
-				<div className="input-container">
-					<label htmlFor="email">Почта</label>
-					<CustomInput type="email" placeholder="Почта" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required={true}/>
-				</div>
+                <div className="input-container">
+                    <label htmlFor="username">Фамилия</label>
+                    <CustomInput placeholder="Фамилия" id="username" value={lastNameField} setValue={setLastName} required={true}/>
+                </div>
 
-				<CustomButton>Отправить</CustomButton>
+                <div className="input-container">
+                    <label htmlFor="email">Почта</label>
+                    <CustomInput type="email" placeholder="Почта" id="email" value={emailField} setValue={setEmail} required={true}/>
+                </div>
 
-			</form>
-		</PopUpWindow>
-	)
+                <button className="custom-button">Отправить</button>
+
+            </form>
+        </PopUpWindow>
+    )
 }
 
 export default EditProfile

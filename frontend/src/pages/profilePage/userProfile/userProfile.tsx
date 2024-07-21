@@ -2,18 +2,18 @@ import "./userProfile.sass"
 import {useEffect, useState} from "react";
 import moment from "moment";
 import {ru} from "../../../utils/momentLocalization";
-import {User} from "../../../utils/types";
 import CustomButton from "../../../components/customButton/CustomButton";
 import {useSubscribers} from "../../../hooks/users/useSubscribers";
 import {api} from "modules/api.ts";
+import {I_User} from "utils/types.ts";
 
-const UserProfile = ({user_id}) => {
+const UserProfile = ({user_id}:{user_id:string}) => {
 	
-	const [subscribed, setSubscribed] = useState()
+	const [subscribed, setSubscribed] = useState<boolean>()
 
-	const [user, setUser] = useState<User>()
+	const [user, setUser] = useState<I_User>()
 
-	const {subscribers, fetchSubscribers} = useSubscribers()
+	const {subscribers, fetchUserSubscribers} = useSubscribers()
 
 	const fetchUser = async () => {
 		const {data} = await api.get(`users/${user_id}/`)
@@ -26,7 +26,7 @@ const UserProfile = ({user_id}) => {
 		fetchUser()
 	}, [user_id])
 
-	if (user == undefined) {
+	if (!user || !subscribers) {
 		return (
 			<div>
 
@@ -39,10 +39,10 @@ const UserProfile = ({user_id}) => {
 
 		if (response.status == 201) {
 			setSubscribed(true)
-			await fetchSubscribers(user_id)
+			fetchUserSubscribers(user_id)
 		} else if (response.status == 200) {
 			setSubscribed(false)
-			await fetchSubscribers(user_id)
+			fetchUserSubscribers(user_id)
 		}
 	}
 
@@ -52,7 +52,7 @@ const UserProfile = ({user_id}) => {
 			<img className="user-avatar" src={user.photo} alt=""/>
 
 			<div className="user-info-container">
-				<span>Никнейм: {user.username}</span>
+				<span>Никнейм: {user.firstName} {user.lastName}</span>
 				<span>Почта: {user.email}</span>
 				<span>Дата регистрации: {moment(user.date_register).locale(ru()).format("D MMMM")}</span>
 				<span>Рейтинг: {user.rating}</span>
@@ -60,7 +60,9 @@ const UserProfile = ({user_id}) => {
 			</div>
 
 			<div className="edit-button-container">
-				<CustomButton onClick={handleSubscribeButtonClick}>{ subscribed ? "Отписаться" : "Подписаться" }</CustomButton>
+				<CustomButton onClick={handleSubscribeButtonClick}>
+                    { subscribed ? "Отписаться" : "Подписаться" }
+                </CustomButton>
 			</div>
 
 		</div>
