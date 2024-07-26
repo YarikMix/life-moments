@@ -8,7 +8,6 @@ import {useAuth} from "hooks/users/useAuth.ts";
 import EmailInput from "components/EmailInput";
 import PasswordInput from "components/PasswordInput";
 import {warningMessage} from "utils/toasts.ts";
-import 'react-phone-number-input/style.css'
 import TextInput from "components/TextInput";
 import {FaRegUser} from "react-icons/fa";
 import {MdLocalPhone} from "react-icons/md";

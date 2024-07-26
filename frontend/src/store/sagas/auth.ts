@@ -7,13 +7,15 @@ import {errorMessage, successMessage} from "src/utils/toasts.ts";
 import {cleanUser, updateAuthenticated, updateUser} from "store/users/authSlice.ts";
 
 type T_UserGreetingsMessage = {
-    greetingsMessage?: boolean
+    cb?: (succsess: boolean) => {}
 }
 
-export const CHECK_USER = "auth/checkUser"
-export const checkUser = createAction(CHECK_USER)
+export const checkUser = createAction<T_UserGreetingsMessage>("auth/checkUser")
+export const loginUser = createAction<T_UserLoginCredentials>("auth/loginUser")
+export const registerUser = createAction<T_UserRegisterCredentials>("auth/registerUser")
+export const logoutUser = createAction("auth/logoutUser")
 
-export function* checkUserSaga(action:PayloadAction<T_UserGreetingsMessage>) {
+export function* checkUserSaga(action: ReturnType<typeof checkUser>) {
     console.log("checkUserSaga")
     console.log(action.payload)
     try {
@@ -22,18 +24,14 @@ export function* checkUserSaga(action:PayloadAction<T_UserGreetingsMessage>) {
         if (response.status == 200) {
             yield put(updateUser(response.data));
             yield put(updateAuthenticated(true));
-            action.payload?.greetingsMessage && successMessage(`Добро пожаловать, ${response.data.firstName} ${response.data.lastName}!`)
+            action.payload.cb?.(true)
         }
     } catch {
         console.log("error")
         yield put(cleanUser());
+        action.payload.cb?.(false)
     }
 }
-
-
-
-export const LOGIN_USER = "auth/loginUser"
-export const loginUser = createAction<T_UserLoginCredentials>(LOGIN_USER)
 
 export function* loginUserSaga(action:PayloadAction<T_UserLoginCredentials>) {
     console.log("loginUserSaga")
@@ -49,26 +47,20 @@ export function* loginUserSaga(action:PayloadAction<T_UserLoginCredentials>) {
     }
 }
 
-
-export const REGISTER_USER = "auth/registerUser"
-export const registerUser = createAction<T_UserRegisterCredentials>(REGISTER_USER)
-
 export function* registerUserSaga(action:PayloadAction<T_UserRegisterCredentials>) {
     console.log("registerUserSaga")
     try {
         const response:AxiosResponse<I_User> = yield api.post(`users/register/`, action.payload) as Promise<AxiosResponse<I_User>>;
         console.log(response)
         if (response.status == 201) {
-            yield call(checkUserSaga, {greetingsMessage: true});
+            yield put(checkUser({cb: (sucsess: boolean) => {
+                    sucsess && successMessage(`Добро пожаловать, ${response.data.firstName} ${response.data.lastName}!`);
+                }}))
         }
     } catch {
         errorMessage("Пользователь с такой почтой уже существует!")
     }
 }
-
-
-export const LOGOUT_USER = "auth/logoutUser"
-export const logoutUser = createAction(LOGOUT_USER)
 
 export function* logoutUserSaga() {
     console.log("logoutUserSaga")
@@ -81,8 +73,8 @@ export function* logoutUserSaga() {
 
 
 export function* authWatcherSaga() {
-    yield takeEvery(CHECK_USER, checkUserSaga);
-    yield takeEvery(LOGIN_USER, loginUserSaga);
-    yield takeEvery(REGISTER_USER, registerUserSaga);
-    yield takeEvery(LOGOUT_USER, logoutUserSaga);
+    yield takeEvery(checkUser.type, checkUserSaga);
+    yield takeEvery(loginUser.type, loginUserSaga);
+    yield takeEvery(registerUser.type, registerUserSaga);
+    yield takeEvery(logoutUser.type, logoutUserSaga);
 }
